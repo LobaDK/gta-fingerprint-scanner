@@ -8,7 +8,8 @@ full_print = None
 
 def take_screenshot():
     # Take a screenshot
-    screenshot = pyautogui.screenshot()
+    # screenshot = pyautogui.screenshot()
+    screenshot = cv2.imread('./test.png')
     # Convert the screenshot to a numpy array and then to grayscale
     screenshot = cv2.cvtColor(np.array(screenshot), cv2.COLOR_RGB2GRAY)
     # Return the screenshot
@@ -23,14 +24,16 @@ def process_image():
 
     # Define the relative locations and sizes of the full print and the partial prints
     # TODO: Placeholder values. Replace with actual values
-    full_print_location = (width // 2, height // 2)
-    full_print_size = (width // 3, height // 3)
+    full_print_location = (width * 0.2865412445730825, height * 0.3117782909930716)
+    full_print_size = (int(width // 1.9), int(height // 1.65))
     partial_print_locations = [(width * 0.9, height * 0.1), (width * 0.9, height * 0.2), (width * 0.9, height * 0.3),
                                (width * 0.9, height * 0.4), (width * 0.9, height * 0.5), (width * 0.9, height * 0.6)]
     partial_print_size = (width // 10, height // 10)
 
     # Extract the full print
     full_print = cv2.getRectSubPix(screenshot, full_print_size, full_print_location)
+
+    cv2.imshow('Full Print', full_print)
 
     # Extract the partial prints
     partial_prints = [cv2.getRectSubPix(screenshot, partial_print_size, loc) for loc in partial_print_locations]
